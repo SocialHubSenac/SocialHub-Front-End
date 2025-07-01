@@ -1,9 +1,8 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import '../style/Cadastro.css';
 
 function Cadastro() {
-    const { cadastro } = useContext(AuthContext);
+    const { register } = useContext(AuthContext);
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
@@ -18,7 +17,7 @@ function Cadastro() {
     }
 
     try {
-        await cadastro({ email, senha });
+        await register({ email, senha });
     } catch (err) {
         console.error(err);
         setError("Erro ao cadastrar. Tente novamente.");

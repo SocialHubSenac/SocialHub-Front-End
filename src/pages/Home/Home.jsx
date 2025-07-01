@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import '../style/Home.css';
+import './Home.css';
 
 function Home() {
     const { logout } = useContext(AuthContext);

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
-import '../style/Login.css';
+import './Login.css';
 
 function Login() {
     const { login } = useContext(AuthContext);
@@ -27,7 +27,7 @@ function Login() {
                 </div>
                 <div>
                     <label>Senha:</label>
-                    <input 
+                    <input
                         type="password"
                         value={senha}
                         required
