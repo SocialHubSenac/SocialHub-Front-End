@@ -1,0 +1,60 @@
+.home-container {
+    max-width: 600px;
+    margin: 10vh auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+}
+
+.home-container h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+}
+
+.home-container p {
+    color: #666;
+    margin: 1rem 0 2rem;
+    font-size: 1.1rem;
+}
+
+.home-container button {
+    padding: 0.9rem 2rem;
+    background-color: #2575fc;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.home-container button:hover {
+    background-color: #1a5fff;
+    transform: scale(1.03);
+}
+
+@media screen and (max-width: 500px) {
+    .home-container {
+        margin: 5vh 1rem;
+        padding: 1.5rem;
+    }
+    
+}
