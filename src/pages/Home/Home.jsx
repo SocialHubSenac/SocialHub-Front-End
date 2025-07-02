@@ -6,8 +6,22 @@ import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import './Home.css';
 
+function LoadingSpinner() {
+    return <div className="spinner">Carregando...</div>;
+}
+
+function PostItem({ titulo, conteudo, autor, data }) {
+    return (
+        <article className="post-item">
+        <p><strong>{titulo}</strong></p>
+        <p>{conteudo}</p>
+        <small>Publicado por: {autor} • {data}</small>
+    </article>
+    );
+}
+
 function Home() {
-    const { logout } = useContext(AuthContext);
+    const { logout, tipoUsuario } = useContext(AuthContext);
     const navigate = useNavigate();
     const [postagens, setPostagens] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -23,12 +37,12 @@ function Home() {
 useEffect(() => {
     async function fetchPostagens() {
         try {
-        const response = await api.get('/postagens');
-        setPostagens(response.data);
+            const response = await api.get('/postagens');
+            setPostagens(response.data);
         } catch (error) {
-        console.error("Erro ao buscar postagens:", error);
+            console.error("Erro ao buscar postagens:", error);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     }
     fetchPostagens();
@@ -36,37 +50,39 @@ useEffect(() => {
 
 return (
     <div className="home-container">
-        <h1>Bem-vindo ao SocialHub</h1>
-        <p>Você está autenticado.</p>
+    <h1>Bem-vindo ao SocialHub</h1>
+    <p>Você está autenticado.</p>
 
-        <div className="home-buttons">
-            <button onClick={irParaPostagem}>Nova Publicação</button>
-            <button onClick={irParaPerfil}>Meu Perfil</button>
-            <button onClick={logout}>Sair</button>
-        </div>
+    <div className="home-buttons">
+        {(tipoUsuario === 'ADMIN' || tipoUsuario === 'ONG') && (
+        <button onClick={irParaPostagem}>Nova Publicação</button>
+        )}
+        <button onClick={irParaPerfil}>Meu Perfil</button>
+        <button onClick={logout}>Sair</button>
+    </div>
 
     <section className="feed-container">
         <h2>Feed de Publicações</h2>
         {loading ? (
-        <p>Carregando publicações...</p>
+        <LoadingSpinner />
         ) : (
         postagens.length === 0 ? (
             <p>Nenhuma publicação encontrada.</p>
         ) : (
             postagens.map((pub) => (
-            <article key={pub.id} className="post-item">
-                <p><strong>{pub.titulo}</strong></p>
-                <p>{pub.conteudo}</p>
-                <small>
-                    Publicado por: {pub.instituicaoNome} • {formatDistanceToNow(new Date(pub.dataCriacao), { locale: ptBR, addSuffix: true })}
-                </small>
-            </article>
+            <PostItem
+                key={pub.id}
+                titulo={pub.titulo}
+                conteudo={pub.conteudo}
+                autor={pub.instituicaoNome}
+                data={formatDistanceToNow(new Date(pub.dataCriacao), { locale: ptBR, addSuffix: true })}
+            />
             ))
         )
         )}
-        </section>
+    </section>
     </div>
-    );
+);
 }
 
 export default Home;
