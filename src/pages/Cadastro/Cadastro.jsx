@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import './Cadastro.css';
 
 function Cadastro() {
     const { register } = useContext(AuthContext);
@@ -30,14 +31,16 @@ return (
         <form onSubmit={handleSubmit} className="cadastro-form">
     {error && <p className="error-message">{error}</p>}
 
+        <label>E-mail:</label>
         <input
-        type="email"
-        placeholder="Email"
+        type="e-mail"
+        placeholder="E-mail"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
         />
 
+        <label>Senha:</label>
         <input
         type="password"
         placeholder="Senha"
@@ -46,6 +49,7 @@ return (
         required
         />
 
+        <label>Confirme sua senha:</label>
         <input
         type="password"
         placeholder="Confirmar Senha"
