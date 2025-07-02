@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import PrimaryButton from '../../components/PrimaryButton';
 import './Login.css';
 
 function Login() {
@@ -34,7 +35,7 @@ function Login() {
                         onChange={(e) => setSenha(e.target.value)} 
                     />
                 </div>
-                <button type="submit">Entrar</button>
+                <PrimaryButton type="submit" text="Entrar"/>
             </form>
         </div>
     )

@@ -1,0 +1,16 @@
+.primary-button {
+    background-color: #5a54e6;
+    color: rgb(255, 255, 255);
+    padding: 10px 16px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .primary-button:hover {
+    background-color: #ffffff73;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  

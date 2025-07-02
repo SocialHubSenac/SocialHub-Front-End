@@ -5,6 +5,8 @@ import api from "../../services/api";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import './Home.css';
+import WelcomeMessage from "../../components/WelcomeMessage";
+import PrimaryButton from "../../components/PrimaryButton";
 
 function Home() {
     const { logout } = useContext(AuthContext);
@@ -40,9 +42,9 @@ return (
         <p>Você está autenticado.</p>
 
         <div className="home-buttons">
-            <button onClick={irParaPostagem}>Nova Publicação</button>
-            <button onClick={irParaPerfil}>Meu Perfil</button>
-            <button onClick={logout}>Sair</button>
+            <PrimaryButton text="Nova Publicação" onClick={irParaPostagem} />
+            <PrimaryButton text="Meu Perfil" onClick={irParaPerfil} />
+            <PrimaryButton text="Sair" onClick={logout} />
         </div>
 
     <section className="feed-container">
