@@ -1,15 +1,20 @@
-import { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useState, useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 import './Cadastro.css';
 
 function Cadastro() {
     const { register } = useContext(AuthContext);
+
+    const [tipo, setTipo] = useState('USER'); 
+    const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [cnpj, setCnpj] = useState('');
+    const [descricao, setDescricao] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (senha !== confirmarSenha) {
@@ -17,46 +22,91 @@ function Cadastro() {
         return;
     }
 
+    
+    const dadosCadastro = {
+        nome,
+        email,
+        senha,
+        tipo,
+    ...(tipo === 'ONG' && { cnpj, descricao }),
+    };
+
     try {
-        await register({ email, senha });
+        await register(dadosCadastro);
     } catch (err) {
-        console.error(err);
-        setError("Erro ao cadastrar. Tente novamente.");
+        setError(err.message || 'Erro no cadastro');
     }
 };
 
 return (
     <div className="cadastro-container">
-        <h1>Crie sua conta no SocialHub</h1>
-        <form onSubmit={handleSubmit} className="cadastro-form">
-    {error && <p className="error-message">{error}</p>}
+    <h1>Crie sua conta no SocialHub</h1>
+    <form onSubmit={handleSubmit} className="cadastro-form">
+        {error && <p className="error-message">{error}</p>}
+
+        <label>Tipo de Conta:</label>
+        <select value={tipo} onChange={e => setTipo(e.target.value)} required>
+            <option value="USER">Usuário</option>
+            <option value="ONG">ONG</option>
+        </select>
+
+        <label>Nome:</label>
+        <input
+            type="text"
+            placeholder="Nome completo"
+            value={nome}
+            onChange={e => setNome(e.target.value)}
+            required
+        />
 
         <label>E-mail:</label>
         <input
-        type="e-mail"
-        placeholder="E-mail"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            required
         />
 
         <label>Senha:</label>
         <input
-        type="password"
-        placeholder="Senha"
-        value={senha}
-        onChange={(e) => setSenha(e.target.value)}
-        required
+            type="password"
+            placeholder="Senha"
+            value={senha}
+            onChange={e => setSenha(e.target.value)}
+            required
         />
 
         <label>Confirme sua senha:</label>
         <input
-        type="password"
-        placeholder="Confirmar Senha"
-        value={confirmarSenha}
-        onChange={(e) => setConfirmarSenha(e.target.value)}
-        required
+            type="password"
+            placeholder="Confirmar Senha"
+            value={confirmarSenha}
+            onChange={e => setConfirmarSenha(e.target.value)}
+            required
         />
+
+        {tipo === 'ONG' && (
+        <>
+            <label>CNPJ:</label>
+            <input
+                type="text"
+                placeholder="CNPJ"
+                value={cnpj}
+                onChange={e => setCnpj(e.target.value)}
+                required={tipo === 'ONG'}
+            />
+
+            <label>Descrição da ONG:</label>
+            <textarea
+                placeholder="Descrição da ONG"
+                value={descricao}
+                onChange={e => setDescricao(e.target.value)}
+                required={tipo === 'ONG'}
+                rows={3}
+            />
+        </>
+        )}
 
         <button type="submit">Cadastrar</button>
     </form>
