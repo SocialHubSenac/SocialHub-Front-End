@@ -1,0 +1,59 @@
+.postagem-container {
+    max-width: 600px;
+    margin: 10vh auto;
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.postagem-container h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.postagem-form textarea {
+    resize: none;
+    min-height: 120px;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transform: box-shadow 0.3s ease;
+}
+
+.postagem-form textarea:focus {
+    box-shadow: 0 0 6px 2px #8a76ff;
+    outline: none;
+}
+
+.postagem-form button {
+    padding: 0.9rem 2rem;
+    background-color: #6a11cb;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.postagem-form button:hover {
+    background-color: #5333ed;
+    transform: translateY(-2px);
+}
+
+.mensagem {
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: #6a11cb;
+}

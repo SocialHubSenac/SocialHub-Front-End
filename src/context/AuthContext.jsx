@@ -29,9 +29,17 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
-    const register = async ({ email, senha }) => {
+    const register = async ({ nome, email, senha, tipo, cnpj, descricao }) => {
         try {
-            await api.post('/auth/register', { email, senha });
+            const payload = {
+                nome,
+                email,
+                senha,
+                tipo,
+                ...(tipo === "ONG" && { cnpj, descricao }),
+            };
+
+            await api.post('/auth/register', payload);
             await login({ email, senha });
 
         } catch (error) {
