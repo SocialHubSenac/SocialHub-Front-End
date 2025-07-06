@@ -1,123 +1,33 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
 .postagem-container {
-    max-width: 600px;
-    width: 90%;
-    margin: 10vh auto;
-    background-color: #f7f9fc;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-    animation: fadeIn 0.8s ease-in-out;
-}
-
-.postagem-container h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #2d3748;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.postagem-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    text-align: left;
-}
-
-.postagem-form textarea {
-    resize: vertical;
-    min-height: 120px;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #cbd5e0;
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
-    background-color: #ffffff;
-    color: #344054;
-    line-height: 1.5;
-    width: 100%;
-}
-
-.postagem-form textarea:focus {
-    box-shadow: 0 0 0 3px rgba(90, 84, 230, 0.2);
-    border-color: #5a54e6;
-    outline: none;
-}
-
-.postagem-form textarea::placeholder {
-    color: #9ca3af;
-    font-style: italic;
-}
-
-.postagem-form button {
-    padding: 0.9rem 2rem;
-    background-color: #7c3aed;
-    border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1rem;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s;
-    align-self: center;
-    min-width: 140px;
-}
-
-.postagem-form button:hover {
-    background-color: #5a2db6;
-    transform: translateY(-2px);
-}
-
-.postagem-form button:disabled {
-    background-color: #9ca3af;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.mensagem {
-    text-align: center;
-    margin-top: 1rem;
-    padding: 0.8rem;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 0.95rem;
-}
-
-.mensagem.sucesso {
-    color: #059669;
-    background-color: #f0fdf4;
-    border: 1px solid #bbf7d0;
-}
-
-.mensagem.erro {
-    color: #dc2626;
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-}
-
-.spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-left-color: #5a54e6;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
+    max-width: 700px;
+    width: 95%;
     margin: 2rem auto;
+    background: #ffffff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+    position: relative;
+    animation: slideIn 0.6s ease-out;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes fadeIn {
+@keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(30px);
     }
     to {
         opacity: 1;
@@ -125,207 +35,298 @@
     }
 }
 
-@media screen and (max-width: 768px) {
+.postagem-container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.postagem-container h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    border-radius: 2px;
+}
+
+.postagem-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.postagem-titulo {
+    padding: 1rem 1.2rem;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background: #f8f9fa;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    width: 100%;
+}
+
+.postagem-titulo:focus {
+    outline: none;
+    border-color: #3498db;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.postagem-titulo:hover {
+    border-color: #bdc3c7;
+}
+
+.postagem-titulo::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+}
+
+.postagem-form textarea {
+    padding: 1.2rem;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: #f8f9fa;
+    color: #2c3e50;
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.postagem-form textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.postagem-form textarea:hover {
+    border-color: #bdc3c7;
+}
+
+.postagem-form textarea::placeholder {
+    color: #95a5a6;
+    font-style: italic;
+}
+
+.contador-caracteres {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: -0.5rem;
+    font-weight: 500;
+}
+
+.contador-caracteres.limite {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.postagem-form button {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-self: center;
+    min-width: 160px;
+    position: relative;
+    overflow: hidden;
+}
+
+.postagem-form button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+}
+
+.postagem-form button:active {
+    transform: translateY(0);
+}
+
+.postagem-form button:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.mensagem {
+    padding: 1rem 1.2rem;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 500;
+    margin-top: 1rem;
+    animation: fadeIn 0.4s ease-out;
+}
+
+.mensagem.sucesso {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mensagem.erro {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
     .postagem-container {
-        margin: 5vh auto;
-        padding: 1.5rem;
-        max-width: 500px;
+        margin: 1rem auto;
+        padding: 2rem;
+        max-width: 90%;
     }
     
     .postagem-container h2 {
-        font-size: 1.6rem;
-        margin-bottom: 1.2rem;
+        font-size: 1.7rem;
+        margin-bottom: 1.5rem;
     }
     
     .postagem-form {
         gap: 1.2rem;
     }
     
+    .postagem-titulo {
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+    }
+    
     .postagem-form textarea {
-        min-height: 100px;
-        padding: 0.9rem;
+        padding: 1rem;
+        min-height: 120px;
         font-size: 0.95rem;
     }
     
     .postagem-form button {
-        padding: 0.8rem 1.5rem;
-        font-size: 0.95rem;
-        min-width: 120px;
-    }
-    
-    .mensagem {
-        font-size: 0.9rem;
-        padding: 0.7rem;
+        padding: 0.9rem 1.8rem;
+        font-size: 1rem;
+        min-width: 140px;
     }
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
     .postagem-container {
-        margin: 3vh auto;
-        padding: 1.2rem;
-        max-width: 350px;
-        border-radius: 10px;
+        margin: 0.5rem auto;
+        padding: 1.5rem;
+        border-radius: 12px;
     }
     
     .postagem-container h2 {
-        font-size: 1.4rem;
-        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
     }
     
     .postagem-form {
         gap: 1rem;
     }
     
-    .postagem-form textarea {
-        min-height: 90px;
-        padding: 0.8rem;
-        font-size: 0.9rem;
-    }
-    
-    .postagem-form button {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-        min-width: 100px;
-        width: 100%;
-        max-width: 200px;
-    }
-    
-    .mensagem {
-        font-size: 0.85rem;
-        padding: 0.6rem;
-    }
-    
-    .spinner {
-        width: 30px;
-        height: 30px;
-        border-width: 3px;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .postagem-container {
-        margin: 2vh auto;
-        padding: 1rem;
-        max-width: 300px;
-    }
-    
-    .postagem-container h2 {
-        font-size: 1.2rem;
-        margin-bottom: 0.8rem;
-    }
-    
-    .postagem-form {
-        gap: 0.8rem;
-    }
-    
-    .postagem-form textarea {
-        min-height: 80px;
-        padding: 0.7rem;
-        font-size: 0.85rem;
-    }
-    
-    .postagem-form button {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
-    }
-    
-    .mensagem {
-        font-size: 0.8rem;
-        padding: 0.5rem;
-    }
-}
-
-.postagem-form textarea:hover {
-    border-color: #a78bfa;
-}
-
-.contador-caracteres {
-    text-align: right;
-    font-size: 0.8rem;
-    color: #9ca3af;
-    margin-top: -0.5rem;
-}
-
-.contador-caracteres.limite {
-    color: #dc2626;
-}
-
-@media screen and (max-width: 480px) {
-    .contador-caracteres {
-        font-size: 0.75rem;
-    }
-}
-
-.postagem-titulo {
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    border: 1px solid #cbd5e0;
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
-    background-color: #ffffff;
-    color: #344054;
-    width: 100%;
-}
-
-.postagem-titulo:focus {
-    box-shadow: 0 0 0 3px rgba(90, 84, 230, 0.2);
-    border-color: #5a54e6;
-    outline: none;
-}
-
-.postagem-titulo:hover {
-    border-color: #a78bfa;
-}
-
-.postagem-titulo::placeholder {
-    color: #9ca3af;
-    font-style: italic;
-}
-
-.erro-mensagem {
-    text-align: center;
-    padding: 1rem;
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: 8px;
-    color: #dc2626;
-    margin: 1rem 0;
-}
-
-.erro-mensagem button {
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    background-color: #dc2626;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-}
-
-.erro-mensagem button:hover {
-    background-color: #b91c1c;
-}
-
-/* Responsividade para o campo título */
-@media screen and (max-width: 768px) {
     .postagem-titulo {
-        padding: 0.7rem 0.9rem;
+        padding: 0.8rem;
         font-size: 0.95rem;
     }
-}
-
-@media screen and (max-width: 480px) {
-    .postagem-titulo {
-        padding: 0.6rem 0.8rem;
+    
+    .postagem-form textarea {
+        padding: 0.9rem;
+        min-height: 100px;
         font-size: 0.9rem;
     }
+    
+    .postagem-form button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+        min-width: 120px;
+        width: 100%;
+    }
+    
+    .contador-caracteres {
+        font-size: 0.8rem;
+    }
 }
 
-@media screen and (max-width: 320px) {
-    .postagem-titulo {
-        padding: 0.5rem 0.7rem;
-        font-size: 0.85rem;
-    }
+.postagem-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c);
+    border-radius: 16px 16px 0 0;
+}
+
+.postagem-titulo:focus,
+.postagem-form textarea:focus {
+    transform: translateY(-1px);
+}
+
+.postagem-form button:disabled {
+    background: #95a5a6;
+    color: #ecf0f1;
+}
+
+.postagem-form textarea:invalid {
+    border-color: #e74c3c;
+}
+
+.postagem-form textarea:valid {
+    border-color: #2ecc71;
+}
+
+* {
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.postagem-container {
+    z-index: 1;
+    position: relative;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }

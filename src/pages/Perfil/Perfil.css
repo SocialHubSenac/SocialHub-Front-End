@@ -1,47 +1,256 @@
 .perfil-container {
-    max-width: 500px;
-    width: 90%;
-    margin: 10vh auto;
-    background-color: #f7f9fc;
+    max-width: 800px;
+    width: 95%;
+    margin: 2rem auto;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
-    text-align: center;
     font-family: 'Poppins', sans-serif;
-    color: #344055;
-    animation: fadeIn 0.8s ease-in-out;
+    color: #333;
 }
 
-.perfil-container h1 {
+/* Header do Perfil */
+.perfil-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.avatar {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 2rem;
-    margin-bottom: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-transform: uppercase;
+}
+
+.usuario-info h1 {
+    font-size: 2.2rem;
+    margin: 0 0 0.5rem 0;
     color: #2d3748;
     font-weight: 700;
 }
 
-.perfil-container p {
+.email {
     font-size: 1.1rem;
-    color: #4a5568;
-    margin: 1rem 0;
-    padding: 0.8rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border-left: 4px solid #5a54e6;
-    text-align: left;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    color: #666;
+    margin: 0 0 0.5rem 0;
 }
 
-.perfil-container p strong {
+.tipo-usuario {
+    background: #667eea;
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.perfil-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.perfil-postagens {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.perfil-postagens h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
     color: #2d3748;
     font-weight: 600;
-    display: inline-block;
-    min-width: 60px;
+}
+
+.loading, .loading-postagens {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(102, 126, 234, 0.1);
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #dc2626;
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.sem-postagens {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+}
+
+.sem-postagens p {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.postagens-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.postagem-item {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(102, 126, 234, 0.1);
+    transition: all 0.3s ease;
+}
+
+.postagem-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.postagem-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.postagem-autor {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.autor-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.autor-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.autor-nome {
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.postagem-data {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.postagem-conteudo {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.postagem-conteudo p {
+    margin: 0;
+    color: #4a5568;
+}
+
+.postagem-actions {
+    display: flex;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-20px);
+        transform: translateY(20px);
     }
     to {
         opacity: 1;
@@ -49,105 +258,62 @@
     }
 }
 
+.perfil-container > * {
+    animation: fadeIn 0.6s ease-out;
+}
+
 @media screen and (max-width: 768px) {
     .perfil-container {
-        margin: 5vh auto;
-        padding: 1.5rem;
-        max-width: 450px;
-    }
-    
-    .perfil-container h1 {
-        font-size: 1.7rem;
-        margin-bottom: 1.2rem;
-    }
-    
-    .perfil-container p {
-        font-size: 1rem;
-        margin: 0.8rem 0;
-        padding: 0.7rem;
-    }
-    
-    .perfil-container p strong {
-        min-width: 55px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .perfil-container {
-        margin: 3vh auto;
-        padding: 1.2rem;
-        max-width: 350px;
-        border-radius: 10px;
-    }
-    
-    .perfil-container h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    .perfil-container p {
-        font-size: 0.95rem;
-        margin: 0.7rem 0;
-        padding: 0.6rem;
-        border-left-width: 3px;
-    }
-    
-    .perfil-container p strong {
-        min-width: 50px;
-        font-size: 0.9rem;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .perfil-container {
-        margin: 2vh auto;
         padding: 1rem;
-        max-width: 300px;
+        margin: 1rem auto;
     }
     
-    .perfil-container h1 {
-        font-size: 1.3rem;
-        margin-bottom: 0.8rem;
+    .perfil-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
     }
     
-    .perfil-container p {
-        font-size: 0.9rem;
-        margin: 0.6rem 0;
-        padding: 0.5rem;
+    .usuario-info h1 {
+        font-size: 1.8rem;
     }
     
-    .perfil-container p strong {
-        min-width: 45px;
-        font-size: 0.85rem;
+    .perfil-stats {
+        grid-template-columns: 1fr;
     }
-}
-
-.perfil-container .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
-    font-size: 1.1rem;
-    color: #666;
-}
-
-.perfil-container .error {
-    color: #dc2626;
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-    padding: 1rem;
-    border-radius: 8px;
-    margin: 1rem 0;
+    
+    .postagem-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
 }
 
 @media screen and (max-width: 480px) {
-    .perfil-container .loading {
-        min-height: 150px;
-        font-size: 1rem;
+    .perfil-container {
+        width: 100%;
+        margin: 0;
+        padding: 1rem;
     }
     
-    .perfil-container .error {
-        padding: 0.8rem;
-        font-size: 0.9rem;
+    .perfil-header, .perfil-postagens {
+        padding: 1.5rem;
+    }
+    
+    .avatar-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .usuario-info h1 {
+        font-size: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .postagem-item {
+        padding: 1rem;
     }
 }

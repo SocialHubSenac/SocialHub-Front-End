@@ -5,11 +5,9 @@ import api from "../../services/api";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import './Home.css';
-import WelcomeMessage from "../../components/WelcomeMessage";
-import PrimaryButton from "../../components/PrimaryButton";
 
 function LoadingSpinner() {
-    return <div className="spinner">Carregando...</div>;
+    return <div className="spinner"></div>;
 }
 
 function PostItem({ titulo, conteudo, autor, data }) {
@@ -25,7 +23,7 @@ function PostItem({ titulo, conteudo, autor, data }) {
 }
 
 function Home() {
-    const { logout, tipoUsuario } = useContext(AuthContext);
+    const { logout, tipoUsuario, usuario } = useContext(AuthContext);
     const navigate = useNavigate();
     const [postagens, setPostagens] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -74,48 +72,108 @@ function Home() {
         fetchPostagens();
     }, []);
 
+    const getUserDisplayName = () => {
+        if (usuario?.nome) return usuario.nome;
+        if (usuario?.email) return usuario.email;
+        return 'Usuário';
+    };
+
+    const getUserTypeDisplay = () => {
+        switch (tipoUsuario) {
+            case 'ADMIN':
+                return 'Administrador';
+            case 'ONG':
+                return 'Organização';
+            case 'USUARIO':
+                return 'Usuário';
+            default:
+                return tipoUsuario || 'Usuário';
+        }
+    };
+
     return (
         <div className="home-container">
-            <h1>Bem-vindo ao SocialHub</h1>
-            <p>Você está autenticado.</p>
             
-            <div className="home-buttons">
-                {(tipoUsuario === 'ADMIN' || tipoUsuario === 'ONG') && (
-                    <button onClick={irParaPostagem}>Nova Publicação</button>
-                )}
-                <button onClick={irParaPerfil}>Meu Perfil</button>
-                <button onClick={logout}>Sair</button>
-            </div>
+            <header className="header-bar">
+                <h1>SocialHub</h1>
+                <div className="user-info">
+                    <span>Bem-vindo, {getUserDisplayName()}</span>
+                    <span>•</span>
+                    <span>{getUserTypeDisplay()}</span>
+                </div>
+            </header>
 
-            <section className="feed-container">
-                <h2>Feed de Publicações</h2>
-                
-                {loading ? (
-                    <LoadingSpinner />
-                ) : erro ? (
-                    <div className="erro-mensagem">
-                        <p>{erro}</p>
-                        <button onClick={() => window.location.reload()}>
-                            Tentar Novamente
-                        </button>
-                    </div>
-                ) : postagens.length === 0 ? (
-                    <p>Nenhuma publicação encontrada.</p>
-                ) : (
-                    postagens.map((pub) => (
-                        <PostItem
-                            key={pub.id}
-                            titulo={pub.titulo}
-                            conteudo={pub.conteudo}
-                            autor={pub.instituicaoNome || pub.autor || pub.usuario || 'Usuário'}
-                            data={formatDistanceToNow(
-                                new Date(pub.dataCriacao || pub.createdAt || pub.data), 
-                                { locale: ptBR, addSuffix: true }
+            <main className="main-content">
+
+                <aside className="sidebar">
+                    <div className="sidebar-section">
+                        <h3>Navegação</h3>
+                        <div className="sidebar-buttons">
+                            {(tipoUsuario === 'ADMIN' || tipoUsuario === 'ONG') && (
+                                <button 
+                                    className="primary" 
+                                    onClick={irParaPostagem}
+                                >
+                                    Nova Publicação
+                                </button>
                             )}
-                        />
-                    ))
-                )}
-            </section>
+                            <button onClick={irParaPerfil}>
+                                Meu Perfil
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="sidebar-section">
+                        <h3>Sistema</h3>
+                        <div className="sidebar-buttons">
+                            <button 
+                                className="danger" 
+                                onClick={logout}
+                            >
+                                Sair do Sistema
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+
+                <section className="feed-area">
+                    <div className="feed-container">
+                        <div className="feed-header">
+                            <h2>Feed de Publicações</h2>
+                            <p>Acompanhe as últimas publicações da plataforma</p>
+                        </div>
+
+                        {loading ? (
+                            <LoadingSpinner />
+                        ) : erro ? (
+                            <div className="erro-mensagem">
+                                <p>{erro}</p>
+                                <button onClick={() => window.location.reload()}>
+                                    Tentar Novamente
+                                </button>
+                            </div>
+                        ) : postagens.length === 0 ? (
+                            <div className="empty-message">
+                                <p>Nenhuma publicação encontrada.</p>
+                                <p>Seja o primeiro a publicar algo!</p>
+                            </div>
+                        ) : (
+                            postagens.map((pub) => (
+                                <PostItem
+                                    key={pub.id}
+                                    titulo={pub.titulo}
+                                    conteudo={pub.conteudo}
+                                    autor={pub.instituicaoNome || pub.autor || pub.usuario || 'Usuário'}
+                                    data={formatDistanceToNow(
+                                        new Date(pub.dataCriacao || pub.createdAt || pub.data), 
+                                        { locale: ptBR, addSuffix: true }
+                                    )}
+                                />
+                            ))
+                        )}
+                    </div>
+                </section>
+            </main>
         </div>
     );
 }
