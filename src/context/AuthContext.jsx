@@ -5,62 +5,63 @@ import api from '../services/api';
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const navigate = useNavigate();
+const navigate = useNavigate();
 
-    const [token, setToken] = useState(localStorage.getItem('token') || null);
-    const [loading, setLoading] = useState(true);
+const [token, setToken] = useState(localStorage.getItem('token') || null);
+const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setLoading(false);
-    }, []);
+useEffect(() => {
+    setLoading(false);
+}, []);
 
-    const login = async ({ email, senha }) => {
-        try {
-            const response = await api.post('/auth/login', { email, senha });
-            const tokenRecebido = response.data;
+const login = async ({ email, senha }) => {
+    try {
+    const response = await api.post('/auth/login', { email, senha });
 
-            setToken(tokenRecebido);
-            localStorage.setItem('token', tokenRecebido);
+    const tokenRecebido = response.data.token || response.data;
 
-            navigate('/');
-        } catch (error) {
-            alert('Login inválido');
-            console.error('Erro ao fazer login:', error);
-        }
-    };
+    setToken(tokenRecebido);
+    localStorage.setItem('token', tokenRecebido);
 
-    const register = async ({ nome, email, senha, tipo, cnpj, descricao }) => {
-        try {
-            const payload = {
-                nome,
-                email,
-                senha,
-                tipo,
-                ...(tipo === "ONG" && { cnpj, descricao }),
-            };
-
-            await api.post('/auth/register', payload);
-            await login({ email, senha });
-
-        } catch (error) {
-            console.error('Erro ao fazer cadastro:', error);
-            throw new Error(
-                error.response?.data?.mensagem || 'Erro no cadastro'
-            );
-        }
-    };
-
-    const logout = () => {
-        setToken(null);
-        localStorage.removeItem('token');
-        navigate('/login');
-    };
-
-    return (
-        <AuthContext.Provider
-            value={{ token, login, logout, register, autenticado: !!token }}
-        >
-            {!loading && children}
-        </AuthContext.Provider>
+    navigate('/');
+    } catch (error) {
+    throw new Error(
+        error.response?.data?.mensagem || 'Login inválido'
     );
+    }
+};
+
+const register = async ({ nome, email, senha, tipo, cnpj, descricao }) => {
+    try {
+    const payload = {
+        nome,
+        email,
+        senha,
+        tipo,
+        ...(tipo === 'ONG' && { cnpj, descricao }),
+    };
+
+    await api.post('/auth/register', payload);
+      await login({ email, senha }); // Loga o usuário após cadastro
+
+    } catch (error) {
+    throw new Error(
+        error.response?.data?.mensagem || 'Erro no cadastro'
+    );
+    }
+};
+
+const logout = () => {
+    setToken(null);
+    localStorage.removeItem('token');
+    navigate('/login');
+};
+
+return (
+    <AuthContext.Provider
+    value={{ token, login, logout, register, autenticado: !!token }}
+    >
+    {!loading && children}
+    </AuthContext.Provider>
+);
 };

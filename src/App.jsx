@@ -10,14 +10,23 @@ import PrimaryButton from './components/PrimaryButton';
 function App() {
   return (
     <Routes>
+      
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
-      <Route path="/home" element={<Home />} />
+
       <Route path="/home/welcome-message" element={<WelcomeMessage />} />
       <Route path="/primary-button" element={<PrimaryButton />} />
-      
+
       <Route
         path="/"
+        element={
+          <RotaPrivada>
+            <Home />
+          </RotaPrivada>
+        }
+      />
+      <Route
+        path="/home"
         element={
           <RotaPrivada>
             <Home />
