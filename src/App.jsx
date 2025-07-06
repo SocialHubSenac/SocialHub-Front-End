@@ -13,8 +13,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/cadastro" element={<Cadastro />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/home/welcome-message" element={<WelcomeMessage />/*rota criada apenas para visualizacao da mensagem*/} />
-      <Route path="/primary-button" element={<PrimaryButton />/*rota criada apenas para visualizacao do botão*/} />
+      <Route path="/home/welcome-message" element={<WelcomeMessage />} />
+      <Route path="/primary-button" element={<PrimaryButton />} />
       
       <Route
         path="/"
@@ -35,3 +35,5 @@ function App() {
     </Routes>
   );
 }
+
+export default App;
