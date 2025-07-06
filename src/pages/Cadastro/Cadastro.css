@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -11,12 +11,23 @@ body {
 
 .cadastro-container {
     max-width: 400px;
+    width: 90%;
     margin: 10vh auto;
-    background: white;
+    background: #f7f9fc;
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
     animation: fadeIn 0.8s ease-in-out;
+    color: #344055;
+    font-family: 'Poppins', sans-serif;
+}
+
+.cadastro-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
 }
 
 @keyframes fadeIn {
@@ -39,6 +50,8 @@ body {
 .cadastro-form label {
     margin: 0;
     font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a5568;
 }
 
 .cadastro-form input,
@@ -46,23 +59,27 @@ body {
 .cadastro-form textarea {
     padding: 0.75rem;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid #cbd5e0;
     font-size: 1rem;
     font-family: 'Poppins', sans-serif;
-    transition: box-shadow 0.3s;
-    resize: vertical; /* para textarea */
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+    color: #344054;
+    resize: vertical;
+    width: 100%;
 }
 
 .cadastro-form input:focus,
 .cadastro-form select:focus,
 .cadastro-form textarea:focus {
-    box-shadow: 0 0 6px 2px #8a76ff;
+    box-shadow: 0 0 0 3px rgba(90, 84, 230, 0.2);
+    border-color: #5a54e6;
     outline: none;
 }
 
 .cadastro-form button {
     padding: 0.9rem;
-    background-color: #6a11cb;
+    background-color: #7c3aed;
     border: none;
     border-radius: 8px;
     font-weight: 600;
@@ -70,20 +87,113 @@ body {
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s;
+    margin-top: 0.5rem;
 }
 
 .cadastro-form button:hover {
-    background-color: #5333ed;
+    background-color: #5a2db6;
     transform: translateY(-2px);
 }
 
 .error-message {
-    color: #6a11cb;
-    background-color: #fdecea;
-    border: 1px solid #f5c6cb;
+    color: #dc2626;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
     padding: 0.9rem;
     border-radius: 8px;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-family: 'Poppins', sans-serif;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .cadastro-container {
+        margin: 5vh auto;
+        padding: 1.5rem;
+        max-width: 350px;
+    }
+    
+    .cadastro-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .cadastro-form {
+        gap: 1rem;
+    }
+    
+    .cadastro-form input,
+    .cadastro-form select,
+    .cadastro-form textarea {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+    }
+    
+    .cadastro-form button {
+        padding: 0.8rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cadastro-container {
+        margin: 3vh auto;
+        padding: 1.2rem;
+        max-width: 320px;
+        border-radius: 10px;
+    }
+    
+    .cadastro-container h1 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .cadastro-form {
+        gap: 0.8rem;
+    }
+    
+    .cadastro-form label {
+        font-size: 0.85rem;
+    }
+    
+    .cadastro-form input,
+    .cadastro-form select,
+    .cadastro-form textarea {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+    
+    .cadastro-form textarea {
+        min-height: 80px;
+    }
+    
+    .cadastro-form button {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+    
+    .error-message {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .cadastro-container {
+        margin: 2vh auto;
+        padding: 1rem;
+        max-width: 300px;
+    }
+    
+    .cadastro-container h1 {
+        font-size: 1.2rem;
+    }
+    
+    .cadastro-form input,
+    .cadastro-form select,
+    .cadastro-form textarea {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
 }

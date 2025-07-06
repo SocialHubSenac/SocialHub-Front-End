@@ -5,6 +5,8 @@ import api from "../../services/api";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import './Home.css';
+import WelcomeMessage from "../../components/WelcomeMessage";
+import PrimaryButton from "../../components/PrimaryButton";
 
 function LoadingSpinner() {
     return <div className="spinner">Carregando...</div>;
@@ -52,7 +54,6 @@ return (
     <div className="home-container">
     <h1>Bem-vindo ao SocialHub</h1>
     <p>Você está autenticado.</p>
-
     <div className="home-buttons">
         {(tipoUsuario === 'ADMIN' || tipoUsuario === 'ONG') && (
         <button onClick={irParaPostagem}>Nova Publicação</button>
@@ -60,6 +61,8 @@ return (
         <button onClick={irParaPerfil}>Meu Perfil</button>
         <button onClick={logout}>Sair</button>
     </div>
+
+
 
     <section className="feed-container">
         <h2>Feed de Publicações</h2>

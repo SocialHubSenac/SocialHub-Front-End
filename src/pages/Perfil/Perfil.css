@@ -1,24 +1,35 @@
 .perfil-container{
     max-width: 500px;
     margin: 10vh auto;
-    background-color: #fff;
+    background-color: #f7f9fc;
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    color: #344055;
     animation: fadeIn 0.8s ease-in-out;
 }
 
 .perfil-container h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #333;
+    color: #2d3748;
 }
 
 .perfil-container p {
     font-size: 2rem;
-    color: #555;
+    color: #4a5568;
     margin: 0.5rem 0;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

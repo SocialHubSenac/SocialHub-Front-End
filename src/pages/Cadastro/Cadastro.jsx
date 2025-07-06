@@ -1,5 +1,6 @@
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import PrimaryButton from '../../components/PrimaryButton';
 import './Cadastro.css';
 
 function Cadastro() {
@@ -108,7 +109,7 @@ return (
         </>
         )}
 
-        <button type="submit">Cadastrar</button>
+        <PrimaryButton type="submit" text="Cadastrar"/>
     </form>
     </div>
     );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '../services/Api';
+import api from '../services/api';
 import './Postagem.css';
 
 function Postagem() {
@@ -20,7 +20,7 @@ function Postagem() {
     };
 
     return (
-        <div className='postagem-conatiner'>
+        <div className='postagem-container'>
             <h2>Nova Publicação</h2>
             <form onSubmit={handleSubmit} className='postagem-form'>
                 <textarea
