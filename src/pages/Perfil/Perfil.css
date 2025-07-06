@@ -1,5 +1,6 @@
-.perfil-container{
+.perfil-container {
     max-width: 500px;
+    width: 90%;
     margin: 10vh auto;
     background-color: #f7f9fc;
     padding: 2rem;
@@ -13,14 +14,28 @@
 
 .perfil-container h1 {
     font-size: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     color: #2d3748;
+    font-weight: 700;
 }
 
 .perfil-container p {
-    font-size: 2rem;
+    font-size: 1.1rem;
     color: #4a5568;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
+    padding: 0.8rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border-left: 4px solid #5a54e6;
+    text-align: left;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.perfil-container p strong {
+    color: #2d3748;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 60px;
 }
 
 @keyframes fadeIn {
@@ -31,5 +46,108 @@
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .perfil-container {
+        margin: 5vh auto;
+        padding: 1.5rem;
+        max-width: 450px;
+    }
+    
+    .perfil-container h1 {
+        font-size: 1.7rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .perfil-container p {
+        font-size: 1rem;
+        margin: 0.8rem 0;
+        padding: 0.7rem;
+    }
+    
+    .perfil-container p strong {
+        min-width: 55px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .perfil-container {
+        margin: 3vh auto;
+        padding: 1.2rem;
+        max-width: 350px;
+        border-radius: 10px;
+    }
+    
+    .perfil-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .perfil-container p {
+        font-size: 0.95rem;
+        margin: 0.7rem 0;
+        padding: 0.6rem;
+        border-left-width: 3px;
+    }
+    
+    .perfil-container p strong {
+        min-width: 50px;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .perfil-container {
+        margin: 2vh auto;
+        padding: 1rem;
+        max-width: 300px;
+    }
+    
+    .perfil-container h1 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .perfil-container p {
+        font-size: 0.9rem;
+        margin: 0.6rem 0;
+        padding: 0.5rem;
+    }
+    
+    .perfil-container p strong {
+        min-width: 45px;
+        font-size: 0.85rem;
+    }
+}
+
+.perfil-container .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.perfil-container .error {
+    color: #dc2626;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+@media screen and (max-width: 480px) {
+    .perfil-container .loading {
+        min-height: 150px;
+        font-size: 1rem;
+    }
+    
+    .perfil-container .error {
+        padding: 0.8rem;
+        font-size: 0.9rem;
     }
 }

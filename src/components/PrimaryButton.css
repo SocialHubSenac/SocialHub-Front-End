@@ -1,16 +1,78 @@
 .primary-button {
     background-color: #5a54e6;
     color: rgb(255, 255, 255);
-    padding: 10px 16px;
+    padding: 8px 12px;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 14px;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
   }
   
   .primary-button:hover {
-    background-color: #ffffff73;
+    background-color: #4a44d6;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  
+  .primary-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+  
+  .primary-button:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  @media (min-width: 768px) {
+    .primary-button {
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      min-height: 40px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .primary-button {
+      padding: 12px 20px;
+      font-size: 16px;
+      min-height: 44px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .primary-button {
+      padding: 8px 10px;
+      font-size: 13px;
+      min-height: 32px;
+      border-radius: 4px;
+    }
+  }
+  
+  .primary-button.full-width {
+    width: 100%;
+  }
+  
+  .primary-button.small {
+    padding: 6px 10px;
+    font-size: 12px;
+    min-height: 28px;
+    border-radius: 4px;
+  }
+
+  .primary-button.large {
+    padding: 14px 24px;
+    font-size: 18px;
+    min-height: 48px;
+    border-radius: 10px;
   }
   

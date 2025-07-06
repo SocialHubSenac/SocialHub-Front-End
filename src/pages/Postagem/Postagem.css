@@ -1,5 +1,6 @@
 .postagem-container {
     max-width: 600px;
+    width: 90%;
     margin: 10vh auto;
     background-color: #f7f9fc;
     padding: 2rem;
@@ -14,26 +15,41 @@
     font-size: 1.8rem;
     font-weight: 700;
     color: #2d3748;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     text-align: center;
 }
 
+.postagem-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: left;
+}
+
 .postagem-form textarea {
-    resize: none;
+    resize: vertical;
     min-height: 120px;
     padding: 1rem;
     border-radius: 8px;
     border: 1px solid #cbd5e0;
     font-size: 1rem;
     font-family: 'Poppins', sans-serif;
-    transition: box-shadow 0.3s ease;
+    transition: all 0.3s ease;
     background-color: #ffffff;
     color: #344054;
+    line-height: 1.5;
+    width: 100%;
 }
 
 .postagem-form textarea:focus {
-    box-shadow: 0 0 6px 2px #a3bffa;
+    box-shadow: 0 0 0 3px rgba(90, 84, 230, 0.2);
+    border-color: #5a54e6;
     outline: none;
+}
+
+.postagem-form textarea::placeholder {
+    color: #9ca3af;
+    font-style: italic;
 }
 
 .postagem-form button {
@@ -46,6 +62,8 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s;
+    align-self: center;
+    min-width: 140px;
 }
 
 .postagem-form button:hover {
@@ -53,11 +71,31 @@
     transform: translateY(-2px);
 }
 
+.postagem-form button:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .mensagem {
     text-align: center;
     margin-top: 1rem;
+    padding: 0.8rem;
+    border-radius: 8px;
     font-weight: 600;
-    color: #7c3aed;
+    font-size: 0.95rem;
+}
+
+.mensagem.sucesso {
+    color: #059669;
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.mensagem.erro {
+    color: #dc2626;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
 }
 
 .spinner {
@@ -67,11 +105,227 @@
     width: 40px;
     height: 40px;
     animation: spin 1s linear infinite;
-    margin: auto;
+    margin: 2rem auto;
 }
 
 @keyframes spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .postagem-container {
+        margin: 5vh auto;
+        padding: 1.5rem;
+        max-width: 500px;
+    }
+    
+    .postagem-container h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1.2rem;
+    }
+    
+    .postagem-form {
+        gap: 1.2rem;
+    }
+    
+    .postagem-form textarea {
+        min-height: 100px;
+        padding: 0.9rem;
+        font-size: 0.95rem;
+    }
+    
+    .postagem-form button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.95rem;
+        min-width: 120px;
+    }
+    
+    .mensagem {
+        font-size: 0.9rem;
+        padding: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .postagem-container {
+        margin: 3vh auto;
+        padding: 1.2rem;
+        max-width: 350px;
+        border-radius: 10px;
+    }
+    
+    .postagem-container h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    
+    .postagem-form {
+        gap: 1rem;
+    }
+    
+    .postagem-form textarea {
+        min-height: 90px;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    .postagem-form button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        min-width: 100px;
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .mensagem {
+        font-size: 0.85rem;
+        padding: 0.6rem;
+    }
+    
+    .spinner {
+        width: 30px;
+        height: 30px;
+        border-width: 3px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .postagem-container {
+        margin: 2vh auto;
+        padding: 1rem;
+        max-width: 300px;
+    }
+    
+    .postagem-container h2 {
+        font-size: 1.2rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .postagem-form {
+        gap: 0.8rem;
+    }
+    
+    .postagem-form textarea {
+        min-height: 80px;
+        padding: 0.7rem;
+        font-size: 0.85rem;
+    }
+    
+    .postagem-form button {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .mensagem {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+}
+
+.postagem-form textarea:hover {
+    border-color: #a78bfa;
+}
+
+.contador-caracteres {
+    text-align: right;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: -0.5rem;
+}
+
+.contador-caracteres.limite {
+    color: #dc2626;
+}
+
+@media screen and (max-width: 480px) {
+    .contador-caracteres {
+        font-size: 0.75rem;
+    }
+}
+
+.postagem-titulo {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e0;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+    color: #344054;
+    width: 100%;
+}
+
+.postagem-titulo:focus {
+    box-shadow: 0 0 0 3px rgba(90, 84, 230, 0.2);
+    border-color: #5a54e6;
+    outline: none;
+}
+
+.postagem-titulo:hover {
+    border-color: #a78bfa;
+}
+
+.postagem-titulo::placeholder {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+.erro-mensagem {
+    text-align: center;
+    padding: 1rem;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #dc2626;
+    margin: 1rem 0;
+}
+
+.erro-mensagem button {
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.erro-mensagem button:hover {
+    background-color: #b91c1c;
+}
+
+/* Responsividade para o campo título */
+@media screen and (max-width: 768px) {
+    .postagem-titulo {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .postagem-titulo {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .postagem-titulo {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.85rem;
     }
 }
