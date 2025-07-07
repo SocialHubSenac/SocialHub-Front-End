@@ -1,17 +1,109 @@
 import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import PrimaryButton from '../../components/PrimaryButton';
 import './Login.css';
 
 function Login() {
     const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    const [showResetModal, setShowResetModal] = useState(false);
+    const [resetData, setResetData] = useState({
+        email: '',
+        novaSenha: '',
+        confirmarSenha: ''
+    });
+    const [loading, setLoading] = useState(false);
+    const [erro, setErro] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await login({ email, senha });
+        setLoading(true);
+        setErro('');
+        
+        try {
+            await login({ email, senha });
+            navigate('/home');
+        } catch (error) {
+            console.error('Erro no login:', error);
+            setErro('Email ou senha incorretos');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Função para redefinir senha
+    const handleResetPassword = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setErro('');
+        
+        // Validações locais
+        if (!resetData.email || !resetData.email.trim()) {
+            setErro('Email é obrigatório');
+            setLoading(false);
+            return;
+        }
+
+        if (resetData.novaSenha !== resetData.confirmarSenha) {
+            setErro('As senhas não coincidem');
+            setLoading(false);
+            return;
+        }
+
+        if (resetData.novaSenha.length < 6) {
+            setErro('A senha deve ter pelo menos 6 caracteres');
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/auth/reset-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    email: resetData.email.toLowerCase().trim(),
+                    novaSenha: resetData.novaSenha
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Erro ao redefinir senha');
+            }
+
+            // Sucesso
+            alert('Senha redefinida com sucesso! Agora você pode fazer login com a nova senha.');
+            closeResetModal();
+            
+            // Preencher o email no formulário de login
+            setEmail(resetData.email);
+            
+        } catch (error) {
+            console.error('Erro ao redefinir senha:', error);
+            
+            if (error.message.includes('Failed to fetch')) {
+                setErro('Erro de conexão com o servidor. Verifique sua conexão.');
+            } else {
+                setErro(error.message || 'Erro ao redefinir senha. Tente novamente.');
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const closeResetModal = () => {
+        setShowResetModal(false);
+        setResetData({
+            email: '',
+            novaSenha: '',
+            confirmarSenha: ''
+        });
+        setErro('');
     };
 
     return (
@@ -52,11 +144,9 @@ function Login() {
                                 Social
                             </text>
                             
-                            {/* Borda branca para a palavra "Hub" */}
                             <text x="82" y="25" fontFamily="Arial, sans-serif" fontSize="26" fontWeight="700" fill="#FFFFFF" stroke="#FFFFFF" strokeWidth="3">
                                 Hub
                             </text>
-                            {/* Palavra "Hub" com gradiente por cima */}
                             <text x="82" y="25" fontFamily="Arial, sans-serif" fontSize="26" fontWeight="700" fill="url(#primaryGradient)">
                                 Hub
                             </text>
@@ -70,6 +160,9 @@ function Login() {
 
                 <div className="login-form-container">
                     <h1>Login no SocialHub</h1>
+                    
+                    {erro && <div className="login-error">{erro}</div>}
+                    
                     <form onSubmit={handleSubmit} className="login-form">
                         <div>
                             <label>Email:</label>
@@ -89,8 +182,23 @@ function Login() {
                                 onChange={(e) => setSenha(e.target.value)} 
                             />
                         </div>
-                        <PrimaryButton type="submit" text="Entrar"/>
+                        <PrimaryButton 
+                            type="submit" 
+                            text={loading ? "Entrando..." : "Entrar"}
+                            disabled={loading}
+                        />
                     </form>
+                    
+                    <div className="forgot-password">
+                        <button 
+                            type="button"
+                            className="forgot-password-link"
+                            onClick={() => setShowResetModal(true)}
+                        >
+                            Esqueceu sua senha?
+                        </button>
+                    </div>
+
                     <div className="signup-link">
                         <p>Ainda não tem uma conta?</p>
                         <Link to="/cadastro" className="signup-button">
@@ -99,6 +207,80 @@ function Login() {
                     </div>
                 </div>
             </div>
+
+            {/* Modal Simplificado de Redefinição de Senha */}
+            {showResetModal && (
+                <div className="reset-modal-overlay">
+                    <div className="reset-modal">
+                        <button 
+                            className="reset-modal-close"
+                            onClick={closeResetModal}
+                        >
+                            ×
+                        </button>
+
+                        <h2>Redefinir Senha</h2>
+
+                        {erro && <div className="reset-error">{erro}</div>}
+
+                        <form onSubmit={handleResetPassword} className="reset-form">
+                            <p>Digite seu email e a nova senha:</p>
+                            
+                            <div>
+                                <label>Email:</label>
+                                <input
+                                    type="email"
+                                    value={resetData.email}
+                                    required
+                                    placeholder="Digite seu email"
+                                    onChange={(e) => setResetData(prev => ({
+                                        ...prev,
+                                        email: e.target.value
+                                    }))}
+                                />
+                            </div>
+                            
+                            <div>
+                                <label>Nova Senha:</label>
+                                <input
+                                    type="password"
+                                    value={resetData.novaSenha}
+                                    required
+                                    minLength={6}
+                                    placeholder="Mínimo 6 caracteres"
+                                    onChange={(e) => setResetData(prev => ({
+                                        ...prev,
+                                        novaSenha: e.target.value
+                                    }))}
+                                />
+                            </div>
+                            
+                            <div>
+                                <label>Confirmar Nova Senha:</label>
+                                <input
+                                    type="password"
+                                    value={resetData.confirmarSenha}
+                                    required
+                                    minLength={6}
+                                    placeholder="Digite novamente"
+                                    onChange={(e) => setResetData(prev => ({
+                                        ...prev,
+                                        confirmarSenha: e.target.value
+                                    }))}
+                                />
+                            </div>
+                            
+                            <button 
+                                type="submit" 
+                                className="reset-button"
+                                disabled={loading}
+                            >
+                                {loading ? 'Redefinindo...' : 'Redefinir Senha'}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

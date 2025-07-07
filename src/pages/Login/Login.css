@@ -121,48 +121,25 @@ body {
     margin-top: 1rem;
 }
 
-@media screen and (max-width: 768px) {
-    .login-container {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-        margin: 2rem auto;
-    }
-    
-    .logo-container {
-        padding: 1.5rem;
-        min-height: 120px;
-    }
-    
-    .login-logo {
-        width: 200px;
-    }
-    
-    .login-form-container {
-        padding: 2rem;
-    }
-    
-    .login-form-container h1 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
+/* Estilos para "Esqueceu sua senha?" */
+.forgot-password {
+    text-align: center;
+    margin-top: 1rem;
 }
 
-@media screen and (max-width: 480px) {
-    .login-wrapper {
-        padding: 1rem;
-    }
-    
-    .login-container {
-        margin: 1rem auto;
-    }
-    
-    .login-form-container {
-        padding: 1.5rem;
-    }
-    
-    .login-logo {
-        width: 160px;
-    }
+.forgot-password-link {
+    background: none;
+    border: none;
+    color: #5a54e6;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.forgot-password-link:hover {
+    color: #4c45d6;
 }
 
 .signup-link {
@@ -202,7 +179,208 @@ body {
     transform: translateY(0);
 }
 
+/* Estilos do Modal de Redefinição de Senha */
+.reset-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 2rem;
+}
+
+.reset-modal {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.reset-modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.reset-modal-close:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.reset-modal h2 {
+    margin: 0 0 1.5rem 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.reset-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.reset-form p {
+    margin: 0 0 1rem 0;
+    color: #4a5568;
+    font-size: 0.95rem;
+}
+
+.reset-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.9rem;
+}
+
+.reset-form input {
+    padding: 0.9rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #ffffff;
+    color: #344054;
+    width: 100%;
+}
+
+.reset-form input:focus {
+    box-shadow: 0 0 0 3px rgba(90, 84, 230, 0.2);
+    border-color: #5a54e6;
+    outline: none;
+}
+
+.security-question {
+    padding: 0.9rem;
+    background: #f8f9fa;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #4a5568;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.reset-button {
+    background: linear-gradient(135deg, #5a54e6, #7c73ff);
+    color: white;
+    padding: 0.9rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.reset-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #4c45d6, #6b62ef);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(90, 84, 230, 0.3);
+}
+
+.reset-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.reset-error {
+    background: #fee;
+    border: 1px solid #fcc;
+    color: #c00;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsividade */
 @media screen and (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 2rem auto;
+    }
+    
+    .logo-container {
+        padding: 1.5rem;
+        min-height: 120px;
+    }
+    
+    .login-logo {
+        width: 200px;
+    }
+    
+    .login-form-container {
+        padding: 2rem;
+    }
+    
+    .login-form-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .reset-modal-overlay {
+        padding: 1rem;
+    }
+
+    .reset-modal {
+        padding: 1.5rem;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .login-wrapper {
+        padding: 1rem;
+    }
+    
+    .login-container {
+        margin: 1rem auto;
+    }
+    
+    .login-form-container {
+        padding: 1.5rem;
+    }
+    
+    .login-logo {
+        width: 160px;
+    }
+
     .signup-link {
         margin-top: 1.5rem;
         padding-top: 1rem;
@@ -212,15 +390,16 @@ body {
         padding: 0.7rem 1.2rem;
         font-size: 0.85rem;
     }
-}
 
-@media screen and (max-width: 480px) {
-    .signup-link {
-        margin-top: 1rem;
+    .reset-modal-overlay {
+        padding: 0.5rem;
     }
-    
-    .signup-button {
-        padding: 0.6rem 1rem;
-        font-size: 0.8rem;
+
+    .reset-modal {
+        padding: 1rem;
+    }
+
+    .reset-modal h2 {
+        font-size: 1.3rem;
     }
 }

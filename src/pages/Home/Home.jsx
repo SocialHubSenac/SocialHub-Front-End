@@ -1,181 +1,235 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-import api from "../../services/api";
+import { usePostContext } from "../../context/PostContext";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import './Home.css';
 
 function LoadingSpinner() {
-    return <div className="spinner"></div>;
+  return <div className="spinner"></div>;
 }
 
-function PostItem({ titulo, conteudo, autor, data }) {
-    return (
-        <article className="post-item">
-            <p><strong>{titulo || 'Publicação'}</strong></p>
-            <p>{conteudo}</p>
-            <small>
-                Publicado por: {autor || 'Usuário'} • {data}
-            </small>
-        </article>
-    );
+function PostItem({ id, titulo, conteudo, autor, data, onEdit, onDelete }) {
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await onDelete(id);
+    } finally {
+      setIsDeleting(false);
+      setShowConfirmDelete(false);
+    }
+  };
+
+  return (
+    <article className="post-item">
+      <div className="post-header">
+        <p><strong>{titulo || 'Publicação'}</strong></p>
+        <div className="post-actions">
+          <button 
+            className="edit-btn"
+            onClick={() => onEdit(id)}
+            title="Editar postagem"
+            disabled={isDeleting}
+          >
+            ✏️
+          </button>
+          <button 
+            className="delete-btn"
+            onClick={() => setShowConfirmDelete(true)}
+            title="Excluir postagem"
+            disabled={isDeleting}
+          >
+            {isDeleting ? '⏳' : '🗑️'}
+          </button>
+        </div>
+      </div>
+      
+      <p>{conteudo}</p>
+      
+      <small>
+        Publicado por: {autor || 'Usuário'} • {data}
+      </small>
+
+      {showConfirmDelete && (
+        <div className="confirm-delete-modal">
+          <div className="confirm-delete-content">
+            <p>Tem certeza que deseja excluir esta postagem?</p>
+            <div className="confirm-delete-actions">
+              <button 
+                className="confirm-delete-btn"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                {isDeleting ? 'Excluindo...' : 'Sim, excluir'}
+              </button>
+              <button 
+                className="cancel-delete-btn"
+                onClick={() => setShowConfirmDelete(false)}
+                disabled={isDeleting}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </article>
+  );
 }
 
 function Home() {
-    const { logout, tipoUsuario, usuario } = useContext(AuthContext);
-    const navigate = useNavigate();
-    const [postagens, setPostagens] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [erro, setErro] = useState('');
+  const { logout, tipoUsuario, usuario } = useContext(AuthContext);
+  const { buscarPostagens, excluirPostagem } = usePostContext();
+  const navigate = useNavigate();
 
-    const irParaPostagem = () => {
-        navigate("/postar");
-    };
+  const [postagens, setPostagens] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState('');
 
-    const irParaPerfil = () => {
-        navigate("/perfil");
-    };
+  useEffect(() => {
+    fetchPostagens();
+  }, []);
 
-    useEffect(() => {
-        async function fetchPostagens() {
-            try {
-                setLoading(true);
-                setErro('');
-                
-                const response = await api.get('/postagens');
-                console.log('Dados recebidos:', response.data);
-                
-                if (Array.isArray(response.data)) {
-                    setPostagens(response.data);
-                } else if (response.data && Array.isArray(response.data.data)) {
-                    setPostagens(response.data.data);
-                } else {
-                    console.warn('Formato de dados inesperado:', response.data);
-                    setPostagens([]);
-                }
-            } catch (error) {
-                console.error("Erro ao buscar postagens:", error);
-                
-                if (error.response) {
-                    setErro(`Erro ${error.response.status}: ${error.response.data.message || 'Erro no servidor'}`);
-                } else if (error.request) {
-                    setErro('Erro de conexão. Verifique sua internet.');
-                } else {
-                    setErro('Erro inesperado ao carregar postagens.');
-                }
-            } finally {
-                setLoading(false);
-            }
-        }
-        
-        fetchPostagens();
-    }, []);
+  async function fetchPostagens() {
+    try {
+      setLoading(true);
+      setErro('');
+      const postagensData = await buscarPostagens();
+      setPostagens(postagensData);
+    } catch (error) {
+      console.error("Erro ao buscar postagens:", error);
+      setErro('Erro inesperado ao carregar postagens.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
-    const getUserDisplayName = () => {
-        if (usuario?.nome) return usuario.nome;
-        if (usuario?.email) return usuario.email;
-        return 'Usuário';
-    };
+  const handleNovaPostagem = () => {
+    navigate('/nova-postagem');
+  };
 
-    const getUserTypeDisplay = () => {
-        switch (tipoUsuario) {
-            case 'ADMIN':
-                return 'Administrador';
-            case 'ONG':
-                return 'Organização';
-            case 'USUARIO':
-                return 'Usuário';
-            default:
-                return tipoUsuario || 'Usuário';
-        }
-    };
+  const handleEditarPostagem = (id) => {
+    navigate(`/nova-postagem?edit=${id}`);
+  };
 
-    return (
-        <div className="home-container">
-            
-            <header className="header-bar">
-                <h1>SocialHub</h1>
-                <div className="user-info">
-                    <span>Bem-vindo, {getUserDisplayName()}</span>
-                    <span>•</span>
-                    <span>{getUserTypeDisplay()}</span>
-                </div>
-            </header>
+  const handleExcluirPostagem = async (id) => {
+    try {
+      excluirPostagem(id);
+      // Atualiza a lista local removendo a postagem
+      setPostagens(prevPostagens => 
+        prevPostagens.filter(postagem => postagem.id !== id)
+      );
+    } catch (error) {
+      console.error("Erro ao excluir postagem:", error);
+      setErro('Erro ao excluir postagem. Tente novamente.');
+    }
+  };
 
-            <main className="main-content">
+  const getUserDisplayName = () => {
+    if (usuario?.nome) return usuario.nome;
+    if (usuario?.email) return usuario.email;
+    return 'Usuário';
+  };
 
-                <aside className="sidebar">
-                    <div className="sidebar-section">
-                        <h3>Navegação</h3>
-                        <div className="sidebar-buttons">
-                            {(tipoUsuario === 'ADMIN' || tipoUsuario === 'ONG') && (
-                                <button 
-                                    className="primary" 
-                                    onClick={irParaPostagem}
-                                >
-                                    Nova Publicação
-                                </button>
-                            )}
-                            <button onClick={irParaPerfil}>
-                                Meu Perfil
-                            </button>
-                        </div>
-                    </div>
+  const getUserTypeDisplay = () => {
+    switch (tipoUsuario) {
+      case 'ADMIN': return 'Administrador';
+      case 'ONG': return 'Organização';
+      case 'USER': return 'Usuário';
+      case 'USUARIO': return 'Usuário';
+      default: return tipoUsuario || 'Usuário';
+    }
+  };
 
-                    <div className="sidebar-section">
-                        <h3>Sistema</h3>
-                        <div className="sidebar-buttons">
-                            <button 
-                                className="danger" 
-                                onClick={logout}
-                            >
-                                Sair do Sistema
-                            </button>
-                        </div>
-                    </div>
-                </aside>
+  // Função para verificar se o usuário pode criar postagens
+  const canCreatePost = () => {
+    return tipoUsuario === 'ADMIN' || tipoUsuario === 'ONG' || tipoUsuario === 'USER';
+  };
 
-                <section className="feed-area">
-                    <div className="feed-container">
-                        <div className="feed-header">
-                            <h2>Feed de Publicações</h2>
-                            <p>Acompanhe as últimas publicações da plataforma</p>
-                        </div>
-
-                        {loading ? (
-                            <LoadingSpinner />
-                        ) : erro ? (
-                            <div className="erro-mensagem">
-                                <p>{erro}</p>
-                                <button onClick={() => window.location.reload()}>
-                                    Tentar Novamente
-                                </button>
-                            </div>
-                        ) : postagens.length === 0 ? (
-                            <div className="empty-message">
-                                <p>Nenhuma publicação encontrada.</p>
-                                <p>Seja o primeiro a publicar algo!</p>
-                            </div>
-                        ) : (
-                            postagens.map((pub) => (
-                                <PostItem
-                                    key={pub.id}
-                                    titulo={pub.titulo}
-                                    conteudo={pub.conteudo}
-                                    autor={pub.instituicaoNome || pub.autor || pub.usuario || 'Usuário'}
-                                    data={formatDistanceToNow(
-                                        new Date(pub.dataCriacao || pub.createdAt || pub.data), 
-                                        { locale: ptBR, addSuffix: true }
-                                    )}
-                                />
-                            ))
-                        )}
-                    </div>
-                </section>
-            </main>
+  return (
+    <div className="home-container">
+      <header className="header-bar">
+        <h1>SocialHub</h1>
+        <div className="user-info">
+          <span>Bem-vindo, {getUserDisplayName()}</span>
+          <span>{getUserTypeDisplay()}</span>
         </div>
-    );
+      </header>
+
+      <main className="main-content">
+        <aside className="sidebar">
+          <div className="sidebar-section">
+            <h3>Navegação</h3>
+            <div className="sidebar-buttons">
+              {canCreatePost() && (
+                <button className="primary" onClick={handleNovaPostagem}>
+                  Criar Postagem
+                </button>
+              )}
+              
+              <button onClick={() => navigate('/perfil')}>
+                Meu Perfil
+              </button>
+            </div>
+          </div>
+
+          <div className="sidebar-section">
+            <h3>Sistema</h3>
+            <div className="sidebar-buttons">
+              <button className="danger" onClick={logout}>
+                Sair do Sistema
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <section className="feed-area">
+          <div className="feed-container">
+            <div className="feed-header">
+              <h2>Feed de Publicações</h2>
+              <p>Acompanhe as últimas publicações da plataforma</p>
+            </div>
+
+            {loading ? (
+              <LoadingSpinner />
+            ) : erro ? (
+              <div className="erro-mensagem">
+                <p>{erro}</p>
+                <button onClick={fetchPostagens}>
+                  Tentar Novamente
+                </button>
+              </div>
+            ) : postagens.length === 0 ? (
+              <div className="empty-message">
+                <p>Nenhuma publicação encontrada.</p>
+                <p>Seja o primeiro a publicar algo!</p>
+              </div>
+            ) : (
+              postagens.map((pub) => (
+                <PostItem
+                  key={pub.id}
+                  id={pub.id}
+                  titulo={pub.titulo}
+                  conteudo={pub.conteudo}
+                  autor={pub.autor || 'Usuário'}
+                  data={formatDistanceToNow(
+                    new Date(pub.dataCriacao),
+                    { locale: ptBR, addSuffix: true }
+                  )}
+                  onEdit={handleEditarPostagem}
+                  onDelete={handleExcluirPostagem}
+                />
+              ))
+            )}
+          </div>
+        </section>
+      </main>
+    </div>
+  );
 }
 
 export default Home;

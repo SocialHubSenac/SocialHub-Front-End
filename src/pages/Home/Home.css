@@ -54,6 +54,8 @@ body {
     opacity: 0.9;
 }
 
+/* ---- MAIN CONTENT ---- */
+
 .main-content {
     display: flex;
     flex: 1;
@@ -128,21 +130,7 @@ body {
     background: #fed7d7;
 }
 
-.sidebar-buttons button::before {
-    font-size: 1.1rem;
-}
-
-.sidebar-buttons button[onclick*="irParaPostagem"]::before {
-    content: "📝";
-}
-
-.sidebar-buttons button[onclick*="irParaPerfil"]::before {
-    content: "👤";
-}
-
-.sidebar-buttons button[onclick*="logout"]::before {
-    content: "🚪";
-}
+/* ---- FEED AREA ---- */
 
 .feed-area {
     flex: 1;
@@ -184,6 +172,8 @@ body {
     color: #6c757d;
     font-size: 0.9rem;
 }
+
+/* ---- POST ITEM ---- */
 
 .post-item {
     background: white;
@@ -238,6 +228,8 @@ body {
     font-size: 0.9rem;
 }
 
+/* ---- LOADING SPINNER ---- */
+
 .spinner {
     width: 50px;
     height: 50px;
@@ -252,6 +244,8 @@ body {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* ---- ERROR MESSAGE ---- */
 
 .erro-mensagem {
     background: #fff5f5;
@@ -279,6 +273,8 @@ body {
     background: #c53030;
 }
 
+/* ---- EMPTY MESSAGE ---- */
+
 .empty-message {
     background: white;
     padding: 3rem;
@@ -295,55 +291,109 @@ body {
     margin-bottom: 1rem;
 }
 
-@media (max-width: 1200px) {
-    .sidebar {
-        width: 250px;
-    }
-    
-    .feed-area {
-        padding: 1.5rem;
-    }
+/* ---- NOVA POSTAGEM - FORMULÁRIO ---- */
+
+.postagem-form-home {
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-left: 4px solid #3498db;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.postagem-form-home h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.postagem-form-home input,
+.postagem-form-home textarea {
+    font-family: inherit;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    resize: vertical;
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.postagem-form-home input:focus,
+.postagem-form-home textarea:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.postagem-form-home input:disabled,
+.postagem-form-home textarea:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+}
+
+.postagem-form-home textarea {
+    min-height: 100px;
+}
+
+.postagem-form-home button {
+    padding: 0.6rem 1.2rem;
+    background: #3498db;
+    border: none;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.postagem-form-home button:hover:not(:disabled) {
+    background: #2c80d9;
+}
+
+.postagem-form-home button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* MENSAGENS DE STATUS */
+
+.msg-sucesso {
+    color: #28a745;
+    margin-top: 0.8rem;
+    font-weight: 600;
+}
+
+.msg-erro {
+    color: #e53e3e;
+    margin-top: 0.8rem;
+    font-weight: 600;
+}
+
+/* RESPONSIVIDADE */
 
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;
     }
-    
+
     .sidebar {
         width: 100%;
         padding: 1rem 0;
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: none;
     }
-    
-    .sidebar-section {
-        padding: 0 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    .sidebar-buttons {
-        flex-direction: row;
-        gap: 0.5rem;
-        overflow-x: auto;
-    }
-    
-    .sidebar-buttons button {
-        white-space: nowrap;
-        min-width: 120px;
-    }
-    
+
     .feed-area {
         padding: 1rem;
-    }
-    
-    .header-bar {
-        padding: 1rem;
-        flex-direction: column;
-        gap: 0.5rem;
-        text-align: center;
-    }
-    
-    .header-bar h1 {
-        font-size: 1.5rem;
     }
 }
 
@@ -351,20 +401,292 @@ body {
     .header-bar h1 {
         font-size: 1.3rem;
     }
-    
+
     .feed-header {
         padding: 1rem;
     }
-    
+
     .post-item {
         padding: 1rem;
     }
-    
+
     .sidebar-buttons {
         flex-direction: column;
     }
-    
+
     .sidebar-buttons button {
         min-width: auto;
     }
+}
+
+
+.post-item {
+  border: 1px solid #e1e8ed;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.post-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.post-header p {
+  margin: 0;
+  flex: 1;
+}
+
+.edit-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: #7f8c8d;
+  margin-left: 1rem;
+}
+
+.edit-btn:hover {
+  background: #f8f9fa;
+  color: #3498db;
+  transform: scale(1.1);
+}
+
+.edit-btn:active {
+  transform: scale(0.95);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .post-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .edit-btn {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    align-self: flex-end;
+  }
+}
+
+.post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.post-header p {
+  margin: 0;
+  flex: 1;
+}
+
+.post-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.edit-btn,
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  color: #7f8c8d;
+}
+
+.edit-btn:hover {
+  background: #f8f9fa;
+  color: #3498db;
+  transform: scale(1.1);
+}
+
+.delete-btn:hover {
+  background: #fff5f5;
+  color: #e74c3c;
+  transform: scale(1.1);
+}
+
+.edit-btn:active,
+.delete-btn:active {
+  transform: scale(0.95);
+}
+
+.edit-btn:disabled,
+.delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal de confirmação de exclusão */
+.confirm-delete-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.confirm-delete-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+}
+
+.confirm-delete-content p {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.confirm-delete-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirm-delete-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.confirm-delete-btn:hover:not(:disabled) {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+.confirm-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cancel-delete-btn {
+  background: #95a5a6;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.cancel-delete-btn:hover:not(:disabled) {
+  background: #7f8c8d;
+  transform: translateY(-2px);
+}
+
+.cancel-delete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .post-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .post-actions {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    align-self: flex-end;
+  }
+
+  .confirm-delete-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+
+  .confirm-delete-actions {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .confirm-delete-btn,
+  .cancel-delete-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-actions {
+    gap: 0.3rem;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    font-size: 1rem;
+    padding: 0.4rem;
+  }
+
+  .confirm-delete-content {
+    padding: 1rem;
+  }
+
+  .confirm-delete-content p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
 }
