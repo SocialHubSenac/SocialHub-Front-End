@@ -54,7 +54,6 @@ body {
     opacity: 0.9;
 }
 
-/* ---- MAIN CONTENT ---- */
 
 .main-content {
     display: flex;
@@ -130,7 +129,6 @@ body {
     background: #fed7d7;
 }
 
-/* ---- FEED AREA ---- */
 
 .feed-area {
     flex: 1;
@@ -173,7 +171,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ---- POST ITEM ---- */
 
 .post-item {
     background: white;
@@ -228,7 +225,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ---- LOADING SPINNER ---- */
 
 .spinner {
     width: 50px;
@@ -245,7 +241,6 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* ---- ERROR MESSAGE ---- */
 
 .erro-mensagem {
     background: #fff5f5;
@@ -273,7 +268,6 @@ body {
     background: #c53030;
 }
 
-/* ---- EMPTY MESSAGE ---- */
 
 .empty-message {
     background: white;
@@ -291,7 +285,6 @@ body {
     margin-bottom: 1rem;
 }
 
-/* ---- NOVA POSTAGEM - FORMULÁRIO ---- */
 
 .postagem-form-home {
     background-color: #fff;
@@ -363,7 +356,6 @@ body {
     cursor: not-allowed;
 }
 
-/* MENSAGENS DE STATUS */
 
 .msg-sucesso {
     color: #28a745;
@@ -377,7 +369,6 @@ body {
     font-weight: 600;
 }
 
-/* RESPONSIVIDADE */
 
 @media (max-width: 768px) {
     .main-content {
@@ -537,7 +528,6 @@ body {
   transform: none;
 }
 
-/* Modal de confirmação de exclusão */
 .confirm-delete-modal {
   position: fixed;
   top: 0;

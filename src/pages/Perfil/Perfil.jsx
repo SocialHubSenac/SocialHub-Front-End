@@ -34,7 +34,6 @@ function Perfil() {
                 console.log('📞 Fazendo chamada para /auth/me');
                 console.log('🔑 Token sendo usado:', token.substring(0, 20) + '...');
                 
-                // Configurar o header de autorização
                 const config = {
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -42,7 +41,6 @@ function Perfil() {
                     }
                 };
 
-                // Buscar dados do usuário
                 const userResponse = await api.get('/auth/me', config);
 
                 console.log('📋 Resposta da API:', userResponse);
@@ -52,7 +50,6 @@ function Perfil() {
                     setUsuario(userResponse.data);
                     console.log('✅ Usuário definido:', userResponse.data);
                     
-                    // Buscar postagens do usuário
                     console.log('📝 Buscando postagens...');
                     setLoadingPostagens(true);
                     
@@ -63,7 +60,6 @@ function Perfil() {
                     } catch (postagensError) {
                         console.warn('⚠️ Erro ao buscar postagens específicas:', postagensError);
                         
-                        // Fallback: buscar todas as postagens e filtrar
                         try {
                             const allPostsResponse = await api.get('/postagens', config);
                             
@@ -97,7 +93,6 @@ function Perfil() {
                 
                 if (error.response?.status === 401) {
                     mensagemErro = 'Sessão expirada. Você será redirecionado para o login.';
-                    // Token inválido/expirado - fazer logout e redirecionar
                     setTimeout(() => {
                         logout();
                         navigate('/login');
@@ -165,7 +160,6 @@ function Perfil() {
     const handleRetry = () => {
         setError(null);
         setLoading(true);
-        // Recarregar a página para tentar novamente
         window.location.reload();
     };
 
@@ -271,7 +265,6 @@ function Perfil() {
 
     return (
         <div className="perfil-container">
-            {/* Header do Perfil */}
             <div className="perfil-header">
                 <div className="avatar">
                     <div className="avatar-circle">
@@ -285,7 +278,7 @@ function Perfil() {
                 </div>
             </div>
 
-            {/* Estatísticas do Perfil */}
+
             <div className="perfil-stats">
                 <div className="stat-item">
                     <span className="stat-number">{postagens.length}</span>

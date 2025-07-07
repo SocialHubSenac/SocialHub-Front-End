@@ -8,7 +8,6 @@ const api = axios.create({
   },
 });
 
-// Interceptor para adicionar token nas requisições
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -17,7 +16,6 @@ api.interceptors.request.use(
       config.headers['Authorization'] = `Bearer ${token}`;
     }
     
-    // Debug: mostrar requisição sendo feita
     console.log('📤 Requisição:', {
       method: config.method?.toUpperCase(),
       url: `${config.baseURL}${config.url}`,
@@ -32,10 +30,8 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor para tratar respostas
 api.interceptors.response.use(
   (response) => {
-    // Debug: mostrar resposta recebida
     console.log('📥 Resposta:', {
       status: response.status,
       url: response.config.url,
@@ -45,7 +41,6 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    // Debug: mostrar erro detalhado
     console.error('❌ Erro na resposta:', {
       status: error.response?.status,
       statusText: error.response?.statusText,
@@ -54,7 +49,6 @@ api.interceptors.response.use(
       message: error.message
     });
     
-    // Se token inválido/expirado, redirecionar para login
     if (error.response?.status === 401) {
       const currentPath = window.location.pathname;
       if (currentPath !== '/login' && currentPath !== '/cadastro') {

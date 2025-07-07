@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
   const [tipoUsuario, setTipoUsuario] = useState(null);
 
-  // Decodifica o JWT para extrair dados
   const parseJwt = (token) => {
     try {
       const base64Url = token.split('.')[1];
@@ -34,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = parseJwt(token);
-        if (decoded.sub) { // 'sub' é o campo padrão do JWT para o subject (email)
+        if (decoded.sub) { 
           setUsuario({
             id: decoded.id,
             instituicaoId: decoded.instituicaoId || null,
@@ -57,7 +56,6 @@ export const AuthProvider = ({ children }) => {
 
   const login = async ({ email, senha }) => {
     try {
-      // Limpar dados de entrada
       const emailLimpo = email.trim();
       const senhaLimpa = senha.trim();
       
@@ -70,18 +68,15 @@ export const AuthProvider = ({ children }) => {
       
       console.log('📥 Resposta da API:', response.data);
 
-      // O backend retorna { token: "...", message: "..." }
       const tokenRecebido = response.data.token;
 
       if (!tokenRecebido) {
         throw new Error('Token não recebido do servidor');
       }
 
-      // Salvar token
       setToken(tokenRecebido);
       localStorage.setItem('token', tokenRecebido);
 
-      // Decodificar token para obter dados do usuário
       const decoded = parseJwt(tokenRecebido);
       console.log('🔓 Token decodificado:', decoded);
       
@@ -95,18 +90,14 @@ export const AuthProvider = ({ children }) => {
 
       console.log('✅ Login realizado com sucesso');
       
-      // Navegação corrigida para /home
       navigate('/home');
       
     } catch (error) {
       console.error('❌ Erro no login:', error);
       
-      // Tratar erros específicos baseados na resposta do backend
       if (error.response?.status === 401) {
-        // Backend retorna { message: "Email ou senha incorretos" }
         throw new Error(error.response.data?.message || 'Email ou senha incorretos');
       } else if (error.response?.status === 400) {
-        // Erros de validação
         const errors = error.response.data;
         if (typeof errors === 'object' && errors.message) {
           throw new Error(errors.message);
@@ -137,7 +128,7 @@ export const AuthProvider = ({ children }) => {
         nome,
         email,
         senha,
-        tipo, // ✅ CORREÇÃO: usar 'tipo' ao invés de 'role'
+        tipo,
         ...(tipo === 'ONG' && { cnpj, descricao }),
       };
 
@@ -146,17 +137,14 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/register', payload);
       console.log('📥 Resposta do registro:', response.data);
 
-      // Após registrar, fazer login automaticamente
       await login({ email, senha });
       
     } catch (error) {
       console.error('❌ Erro no registro:', error);
       
-      // Melhor tratamento de erros - extrair mensagem específica
       if (error.response?.status === 400) {
         const errorData = error.response.data;
         
-        // Verificar diferentes formatos de erro que o backend pode retornar
         if (typeof errorData === 'string') {
           throw new Error(errorData);
         } else if (errorData.message) {
@@ -164,11 +152,9 @@ export const AuthProvider = ({ children }) => {
         } else if (errorData.error) {
           throw new Error(errorData.error);
         } else if (errorData.errors) {
-          // Para erros de validação que vêm como array
           if (Array.isArray(errorData.errors)) {
             throw new Error(errorData.errors.join(', '));
           } else if (typeof errorData.errors === 'object') {
-            // Para erros de validação que vêm como objeto
             const errorMessages = Object.values(errorData.errors).flat();
             throw new Error(errorMessages.join(', '));
           }
@@ -176,7 +162,6 @@ export const AuthProvider = ({ children }) => {
           throw new Error('Dados inválidos para cadastro');
         }
       } else if (error.response?.status === 409) {
-        // Conflito - usuário já existe
         throw new Error('Este email já está cadastrado');
       } else if (error.response?.status >= 500) {
         throw new Error('Erro no servidor. Tente novamente mais tarde.');

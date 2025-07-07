@@ -121,7 +121,6 @@ body {
     margin-top: 1rem;
 }
 
-/* Estilos para "Esqueceu sua senha?" */
 .forgot-password {
     text-align: center;
     margin-top: 1rem;
@@ -179,7 +178,6 @@ body {
     transform: translateY(0);
 }
 
-/* Estilos do Modal de Redefinição de Senha */
 .reset-modal-overlay {
     position: fixed;
     top: 0;

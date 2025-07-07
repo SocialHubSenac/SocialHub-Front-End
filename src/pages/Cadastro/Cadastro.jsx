@@ -28,7 +28,6 @@ function Cadastro() {
       return;
     }
 
-    // Validações adicionais
     if (nome.trim().length < 2) {
       setError('Nome deve ter pelo menos 2 caracteres');
       setLoading(false);
@@ -41,7 +40,6 @@ function Cadastro() {
       return;
     }
 
-    // Validação de email básica
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setError('Email inválido');
@@ -49,7 +47,6 @@ function Cadastro() {
       return;
     }
 
-    // Validação específica para ONG
     if (tipo === 'ONG') {
       if (!cnpj || cnpj.trim().length < 14) {
         setError('CNPJ deve ter pelo menos 14 caracteres');

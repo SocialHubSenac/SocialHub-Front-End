@@ -7,9 +7,9 @@ function Postagem() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { adicionarPostagem, editarPostagem, buscarPostagemPorId } = usePostContext();
-  const { usuario } = useContext(AuthContext); // Obtém o usuário atual do contexto
+  const { usuario } = useContext(AuthContext); 
   
-  // Verifica se está editando uma postagem
+
   const editId = searchParams.get('edit');
   const isEditing = !!editId;
 
@@ -52,7 +52,6 @@ function Postagem() {
     setMensagem('');
 
     try {
-      // Simula o delay da API
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       const dadosPostagem = {
@@ -65,12 +64,10 @@ function Postagem() {
       };
 
       if (isEditing) {
-        // Edita a postagem existente
         editarPostagem(Number(editId), dadosPostagem);
         setMensagem('Postagem editada com sucesso!');
         console.log('Postagem editada:', dadosPostagem);
       } else {
-        // Adiciona uma nova postagem
         const novaPostagem = adicionarPostagem(dadosPostagem);
         setMensagem('Postagem criada com sucesso!');
         console.log('Postagem criada:', novaPostagem);

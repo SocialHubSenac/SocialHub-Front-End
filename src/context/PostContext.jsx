@@ -60,7 +60,6 @@ export const PostProvider = ({ children }) => {
   };
 
   const buscarPostagens = async () => {
-    // Simula uma chamada de API com delay
     await new Promise(resolve => setTimeout(resolve, 500));
     return postagens;
   };

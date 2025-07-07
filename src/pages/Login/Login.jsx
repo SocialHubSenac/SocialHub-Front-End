@@ -40,7 +40,6 @@ function Login() {
         setLoading(true);
         setErro('');
         
-        // Validações locais
         if (!resetData.email || !resetData.email.trim()) {
             setErro('Email é obrigatório');
             setLoading(false);
@@ -76,11 +75,9 @@ function Login() {
                 throw new Error(errorData.message || 'Erro ao redefinir senha');
             }
 
-            // Sucesso
             alert('Senha redefinida com sucesso! Agora você pode fazer login com a nova senha.');
             closeResetModal();
             
-            // Preencher o email no formulário de login
             setEmail(resetData.email);
             
         } catch (error) {

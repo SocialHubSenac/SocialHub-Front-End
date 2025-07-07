@@ -11,7 +11,6 @@ const WelcomeMessage = () =>{
             Olá, {user?.nome || 'Pedro'}! Bem-vindo de volta ao <strong>SocialHub</strong>. 
             </h2>
         </div>
-        /* Verificar se está puxando o nome do usuário, || 'Pedro' apenas exmplo. Verificar sintaxe{user?.nome} verificar Token e suas permissões. */ 
     );
 };
 

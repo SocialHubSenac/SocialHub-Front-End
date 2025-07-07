@@ -22,7 +22,7 @@ function App() {
           <Route path="/home/welcome-message" element={<WelcomeMessage />} />
           <Route path="/primary-button" element={<PrimaryButton />} />
 
-          {/* Alterado para rota nova-postagem */}
+
           <Route
             path="/nova-postagem"
             element={

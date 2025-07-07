@@ -48,16 +48,14 @@ body {
     align-items: start;
 }
 
-/* Estilo para labels */
 .cadastro-form label {
-    margin: 0 0 0.3rem 0; /* Reduzido para deixar mais próximo */
+    margin: 0 0 0.3rem 0; 
     font-weight: 600;
     font-size: 0.9rem;
     color: #4a5568;
     display: block;
 }
 
-/* Estilo para inputs, selects e textareas */
 .cadastro-form input,
 .cadastro-form select,
 .cadastro-form textarea {
@@ -71,7 +69,7 @@ body {
     color: #344054;
     resize: vertical;
     width: 100%;
-    margin: 0 0 0.5rem 0; /* Margem inferior reduzida */
+    margin: 0 0 0.5rem 0;
 }
 
 .cadastro-form input:focus,
@@ -82,7 +80,6 @@ body {
     outline: none;
 }
 
-/* Ajuste para mensagem de erro */
 .error-message {
     color: #dc2626;
     background-color: #fef2f2;
@@ -97,7 +94,6 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Ajuste para o botão */
 .cadastro-form button {
     padding: 0.9rem;
     background-color: #7c3aed;
